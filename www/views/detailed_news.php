@@ -8,5 +8,6 @@
 
 <p><?php echo $detailed_news; ?></p>
 
+
 </body>
 </html>
