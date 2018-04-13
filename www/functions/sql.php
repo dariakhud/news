@@ -8,13 +8,13 @@ function Sql_connect() {
     return $link;
 }
 
-function Sql_query($link, $sql) {
+function Sql_query($link, $sql, $class = 'stdClass') {
 
     $result = mysqli_query($link, $sql);
 
     $mas = [];
     if ($result !== false) {
-        while (!is_null($row = mysqli_fetch_array($result))) {
+        while (!is_null($row = mysqli_fetch_object($result, $class))) {
             $mas[] = $row;
         }
     }
@@ -23,7 +23,7 @@ function Sql_query($link, $sql) {
 
 }
 
-function Sql_exec($link, $sql) {
+function Sql_execute($link, $sql) {
 
     mysqli_query($link, $sql);
 

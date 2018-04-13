@@ -6,8 +6,8 @@ if (!empty($_POST)) {
 
     $data = [];
 
-    if (!empty($_POST['name'])) {
-        $data['name'] = $_POST['name'];
+    if (!empty($_POST['title'])) {
+        $data['title'] = $_POST['title'];
     }
 
     if (!empty($_POST['date'])) {
@@ -17,8 +17,8 @@ if (!empty($_POST)) {
         $data['text'] = $_POST['text'];
     }
 
-    if (isset($data['name']) && isset($data['date']) && isset($data['text'])) {
-        News_insert($data);
+    if (isset($data['title']) && isset($data['date']) && isset($data['text'])) {
+        News::insert($data);
         header('Location: /index.php');
     }
 
