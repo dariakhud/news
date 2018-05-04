@@ -9,6 +9,5 @@ class News
     public $date;
 
     protected static $table = 'news';
-    protected static $class = 'News';
     
 }

@@ -20,7 +20,11 @@ class AdminController {
             }
 
             if (isset($data['title']) && isset($data['date']) &&    isset($data['text'])) {
-                News::insert($data);
+                $news = new News;
+                $news->data['title'] = $data['title'];
+                $news->data['date'] = $data['date'];
+                $news->data['text'] = $data['text'];
+                $news->insert();
                 header('Location: /index.php');
             }
 

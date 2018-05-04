@@ -2,47 +2,40 @@
 
 class Database {
 
-    private $link;
+    private $dbh;
+    private $className = 'StdClass';
 
     public function __construct() {
 
-        $link = mysqli_connect('localhost', 'root', '');
-        mysqli_select_db($link, 'news');
-
-        $this->link = $link;
+        $this->dbh = new PDO('mysql:dbname=news;host=localhost', 'root', '');
 
     }
     
-    public function queryAll($sql, $class = 'stdClass') {
+    public function setClassName($className) {
         
-        $result = mysqli_query($this->link, $sql);
-
-        $mas = [];
-        if ($result !== false) {
-            while (!is_null($row = mysqli_fetch_object($result, $class))) {
-                $mas[] = $row;
-            }
-        }
-
-        return $mas;
-    }
-    
-    public function queryOne($sql, $class = 'stdClass') {
-        
-        return $this->queryAll($sql, $class)[0];
+        $this->className = $className;
         
     }
     
-    public function Sql_execute($sql) {
-
-        mysqli_query($this->link, $sql);
-
-    }   
-
-    public function insert($sql) {
+    public function query($sql, $params=[]) {
         
-        $this->Sql_execute($sql);
+        $sth = $this->dbh->prepare($sql);
+        $sth->execute($params);
+        return $sth->fetchAll(PDO::FETCH_CLASS, $this->className);
         
     }
-
+    
+    public function execute($sql, $params=[]) {
+        
+        $sth = $this->dbh->prepare($sql);
+        return $sth->execute($params);
+        
+    }
+    
+    public function lastInsertID() {
+        
+        return $this->dbh->lastInsertId();
+        
+    }
+    
 }
