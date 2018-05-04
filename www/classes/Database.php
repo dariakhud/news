@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . '/../functions/sql.php';
-
 class Database {
 
     private $link;
@@ -14,15 +12,37 @@ class Database {
         $this->link = $link;
 
     }
+    
+    public function queryAll($sql, $class = 'stdClass') {
+        
+        $result = mysqli_query($this->link, $sql);
 
-    public function get_query($sql, $class) {
-        $link = Sql_connect();
-        return Sql_query($link, $sql, $class);
+        $mas = [];
+        if ($result !== false) {
+            while (!is_null($row = mysqli_fetch_object($result, $class))) {
+                $mas[] = $row;
+            }
+        }
+
+        return $mas;
     }
+    
+    public function queryOne($sql, $class = 'stdClass') {
+        
+        return $this->queryAll($sql, $class)[0];
+        
+    }
+    
+    public function Sql_execute($sql) {
+
+        mysqli_query($this->link, $sql);
+
+    }   
 
     public function insert($sql) {
-        $link = Sql_connect();
-        Sql_execute($link, $sql);
+        
+        $this->Sql_execute($sql);
+        
     }
 
 }

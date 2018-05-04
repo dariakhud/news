@@ -8,7 +8,7 @@
 
 <ul>
     <?php
-    foreach ($NewsList as $news) {
+    foreach ($this->data['NewsList'] as $news) {
         ?>
         <li><a href="detailed_news.php?news=<?php echo $news->text; ?>" target="_blank">
                 <?php echo $news->title . ' (' . $news->date . ')'; ?>
@@ -18,7 +18,7 @@
     ?>
 </ul>
 
-<form action="/add_news.php" method="post" enctype="multipart/form-data">
+<form action="/controllers/action.php" method="post" enctype="multipart/form-data">
     <label for="title">Название новости</label>
     <input type="text" id="title" name="title">
 
